@@ -1,4 +1,4 @@
-# lcl
+# LiftCharmLogbook - LCL
 
 A new Flutter project.
 
