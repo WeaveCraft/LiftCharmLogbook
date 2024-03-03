@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../data/workout_data.dart';
+import 'workout_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,8 +36,8 @@ class _HomePageState extends State<HomePage> {
             ));
   }
 
-  void goToWorkoutPage() {
-    
+  void goToWorkoutPage(String workoutName) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => WorkoutPage(workoutName: workoutName),));
   }
 
   void save() {
@@ -73,7 +74,7 @@ class _HomePageState extends State<HomePage> {
             title: Text(value.getWorkoutList()[index].name),
             trailing: IconButton(
               icon: Icon(Icons.arrow_forward_ios),
-              onPressed: goToWorkoutPage,
+              onPressed: () => goToWorkoutPage(value.getWorkoutList()[index].name),
               )
           ),
         ),
