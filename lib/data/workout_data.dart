@@ -45,7 +45,7 @@ class WorkoutData extends ChangeNotifier{
     notifyListeners();
   }
 
-  void CheckOffExercises(String workoutName, String exerciseName) {
+  void checkOffExercises(String workoutName, String exerciseName) {
     Exercise relevantExercise = getRelevantExercise(workoutName, exerciseName);
 
     relevantExercise.isCompleted = !relevantExercise.isCompleted;
