@@ -18,11 +18,85 @@ class _WorkoutPageState extends State<WorkoutPage> {
         .checkOffExercises(workoutName, exerciseName);
   }
 
+  final exerciseNameController = TextEditingController();
+  final weightController = TextEditingController();
+  final repsController = TextEditingController();
+  final setsController = TextEditingController();
+
+  void createNewExercise() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+          title: Text('Text'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: exerciseNameController,
+              ),
+              TextField(
+                controller: weightController,
+              ),
+              TextField(
+                controller: repsController,
+              ),
+              TextField(
+                controller: setsController,
+              ),
+            ],
+          ),
+          actions: [
+            MaterialButton(
+              onPressed: save,
+              child: Text('save'),
+            ),
+            MaterialButton(
+              onPressed: cancel,
+              child: Text('cancel'),
+            ),
+          ]),
+    );
+  }
+
+  void save() {
+    String newExerciseName = exerciseNameController.text;
+    String weight = weightController.text;
+    String reps = repsController.text;
+    String sets = setsController.text;
+
+    Provider.of<WorkoutData>(context, listen: false).addExercise(
+      widget.workoutName,
+      newExerciseName,
+      weight,
+      reps,
+      sets,
+    );
+
+    Navigator.pop(context);
+    clear();
+  }
+
+  void cancel() {
+    Navigator.pop(context);
+    clear();
+  }
+
+  void clear() {
+    exerciseNameController.clear();
+    weightController.clear();
+    repsController.clear();
+    setsController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<WorkoutData>(
       builder: (context, value, child) => Scaffold(
         appBar: AppBar(title: Text(widget.workoutName)),
+        floatingActionButton: FloatingActionButton(
+          onPressed: createNewExercise,
+          child: Icon(Icons.add),
+        ),
         body: ListView.builder(
             itemCount: value.numberOfExercisesInWorkout(widget.workoutName),
             itemBuilder: (context, index) => ExerciseTile(
