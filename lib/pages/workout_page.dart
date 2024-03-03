@@ -13,6 +13,11 @@ class WorkoutPage extends StatefulWidget {
 }
 
 class _WorkoutPageState extends State<WorkoutPage> {
+  void onCheckBoxChanged(String workoutName, String exerciseName) {
+    Provider.of<WorkoutData>(context, listen: false)
+        .checkOffExercises(workoutName, exerciseName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<WorkoutData>(
@@ -41,6 +46,12 @@ class _WorkoutPageState extends State<WorkoutPage> {
                       .getRelevantWorkout(widget.workoutName)
                       .exercises[index]
                       .isCompleted,
+                  onCheckBoxChanged: (val) => onCheckBoxChanged(
+                      widget.workoutName,
+                      value
+                          .getRelevantWorkout(widget.workoutName)
+                          .exercises[index]
+                          .name),
                 )),
       ),
     );
